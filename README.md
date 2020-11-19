@@ -9,8 +9,8 @@ Learning Go by implementing different Data Structures and Algorithms. Using Algo
 - [x] Priority Queues
 
 ### Searching
-- [ ] Symbol Tables
-- [ ] Binary Search Trees
+- [x] Symbol Tables
+- [x] Binary Search Trees
 - [ ] Balanced Search Trees
 - [ ] Hash Tables
 
