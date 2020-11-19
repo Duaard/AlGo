@@ -188,3 +188,56 @@ func ceil(n *Node, k Key, f func(interface{}, interface{}) int) *Node {
 	}
 	return n
 }
+
+// DelMin removes the smallest node in the tree
+func (b *BinarySearchTree) DelMin() {
+	b.root = delMin(b.root)
+}
+
+// Helper function to delete node recursively
+func delMin(n *Node) *Node {
+	// If left is null, this is the min node
+	if n.left == nil {
+		// Return link of its right node
+		return n.right
+	}
+
+	// Recursively call for delMin
+	n.left = delMin(n.left)
+
+	// Return n
+	return n
+}
+
+// Delete searches and deletes given Key
+func (b *BinarySearchTree) Delete(key Key) {
+	b.root = delete(b.root, key, b.compare)
+}
+
+// Searches for key recursively and deletes it
+func delete(n *Node, k Key, f func(interface{}, interface{}) int) *Node {
+	if n == nil {
+		return nil
+	}
+
+	switch f(k, n.key) {
+	case -1:
+		// Search for the key in the left side
+		n.left = delete(n.left, k, f)
+	case 1:
+		// Search for the key in the right side
+		n.right = delete(n.right, k, f)
+	default:
+		// Found the key to delete
+		// Get min node of its right subtree
+		m := min(n.right)
+		// Point successor's right to current right
+		m.right = delMin(n.right)
+		// Set left link of successor to current left
+		m.left = n.left
+		// Return this node
+		return m
+	}
+
+	return n
+}
